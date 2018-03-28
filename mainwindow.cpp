@@ -30,15 +30,13 @@ MainWindow::MainWindow(QWidget *parent) :
     shadowEffect->setOffset(3);
     ui->centralWidget->setGraphicsEffect(shadowEffect);
 
-    //setNameAndScore();
 
     ui->gameWidget->setCurrentWidget(ui->pageMain);
     ui->menuWidget->setCurrentWidget(ui->pageMenu);
 
-    //hideUserInfo();
-  //  hideScoreInfo();
+
     showSpecialButtons();
-  //  showLoginButtons();
+
 
     mediaPlayer = new QMediaPlayer;
     mediaPlaylist = new QMediaPlaylist(mediaPlayer);
@@ -77,38 +75,7 @@ MainWindow::~MainWindow()
     delete tmr;
 }
 
-/*void MainWindow::hideUserInfo()
-{
-    ui->name->hide();
-    ui->score->hide();
-    ui->verticalSpacer_16->changeSize(20, 0, QSizePolicy::Minimum, QSizePolicy::Minimum);
-}
 
-void MainWindow::showUserInfo()
-{
-    ui->name->show();
-    ui->score->show();
-    ui->verticalSpacer_16->changeSize(20, 10, QSizePolicy::Minimum, QSizePolicy::Minimum);
-}
-
-void MainWindow::hideScoreInfo()
-{
-    ui->answerLabel->hide();
-    ui->countRightAnswers->hide();
-    ui->timeLabel->hide();
-    ui->secondsLabel->hide();
-    ui->verticalSpacer_2->changeSize(20, 0, QSizePolicy::Minimum, QSizePolicy::Minimum);
-}
-
-void MainWindow::showScoreInfo()
-{
-    ui->answerLabel->show();
-    ui->countRightAnswers->show();
-    ui->timeLabel->show();
-    ui->secondsLabel->show();
-    ui->verticalSpacer_2->changeSize(20, 10, QSizePolicy::Minimum, QSizePolicy::Minimum);
-}
-*/
 
 void MainWindow::hideSpecialButtons()
 {
@@ -126,18 +93,7 @@ void MainWindow::showSpecialButtons()
     ui->mainpageButton->hide();
 }
 
-/*void MainWindow::hideLoginButtons()
-{
-    ui->loginButton->hide();
-    ui->signupButton_2->hide();
-}
 
-void MainWindow::showLoginButtons()
-{
-    ui->loginButton->show();
-    ui->signupButton_2->show();
-}
-*/
 void MainWindow::installEventFilterOnBtns()
 {
     ui->answerButton_1->installEventFilter(this);
@@ -171,12 +127,10 @@ void MainWindow::on_playMusic_clicked()
     actualGame = "music";
     checkInGame = true;
 
-   // changeCurrentScore(0);
+
 
     ui->gameWidget->setCurrentWidget(ui->pageMusic);
-    //showUserInfo();
-   // showScoreInfo();
-    //hideLoginButtons();
+
     hideSpecialButtons();
 
     tmr->start();
@@ -192,13 +146,8 @@ void MainWindow::on_playFilm_clicked()
 {
     actualGame = "films";
     checkInGame = true;
+ ui->gameWidget->setCurrentWidget(ui->pageFilm);
 
-  //  changeCurrentScore(0);
-
-    ui->gameWidget->setCurrentWidget(ui->pageFilm);
-    //showUserInfo();
-  //  showScoreInfo();
-   // hideLoginButtons();
     hideSpecialButtons();
 
     tmr->start();
@@ -237,79 +186,15 @@ void MainWindow::on_mainpageButton_clicked()
             backgroundMusic();
             removeEventFilterOnBtns();
         }
-        /*ui->score->setText("<html><head/><body><p align=\"center\">"
-                           "<span style=\" font-size:18pt; color:#ffffff;\">" +
-                           QString::number(game.getPlayer().getSumScore()) +
-                           "</span></p></body></html>");
-        ui->gameWidget->setCurrentWidget(ui->pageMain);
-        if (game.isLogin()){
-            showUserInfo();
-            hideLoginButtons();
-        }
-        else {
-            hideUserInfo();
-            showLoginButtons();
-        }
 
-        hideScoreInfo();*/
         showSpecialButtons();
     }
 }
 
-/*void MainWindow::on_statButton_clicked()
-{
-    bool check = true;
-    if (checkInGame)
-    {
-        check = QMessageBox::warning(0,
-                                     "Внимание!",
-                                     "Вы потеряете игровой процесс."
-                                     "\nОткрыть статистику?",
-                                     "Нет",
-                                     "Да",
-                                     QString(),
-                                     0,
-                                     1
-                                    );
-
-    }
-    if (check)
-    {
-        tmr->stop();
-        tmr_btn->stop();
-        tmr_end->stop();
-        if (checkInGame){
-            checkInGame = false;
-            backgroundMusic();
-            //hideScoreInfo();
-            removeEventFilterOnBtns();
-        }
-        /*ui->score->setText("<html><head/><body><p align=\"center\">"
-                           "<span style=\" font-size:18pt; color:#ffffff;\">" +
-                           QString::number(game.getPlayer().getSumScore()) +
-                           "</span></p></body></html>");
-        ui->gameWidget->setCurrentWidget(ui->pageStats);
-        showUserInfo();*/
-      //  hideLoginButtons();
-
-       // hideSpecialButtons();
-       // ui->tryagainButton->hide();
-
-        //statsOut();
-  //  }
-//}*/
 
 
-/*void MainWindow::on_loginButton_clicked()
-{
-    ui->gameWidget->setCurrentWidget(ui->pageLogin);
-    //showUserInfo();
-    hideLoginButtons();
 
-    hideSpecialButtons();
-}
 
-*/
 void MainWindow::on_cancelButton_clicked()
 {
     on_mainpageButton_clicked();
@@ -320,62 +205,7 @@ void MainWindow::on_exitButton_clicked()
     close();
 }
 
-/*void MainWindow::on_loginButton_3_clicked()
-{
-    if (ui->username->text() != "" && ui->password->text() != "")
-    {
-        if (game.login(ui->username->text(), ui->password->text()))
-        {
-            setNameAndScore();
-            on_mainpageButton_clicked();
-        }
-        else
-        {
-            ui->label_5->setText("<html><head/><body><p align=\"center\"><span style=\" color:#ffffff;\">"
-                                 "Неправильный логин и/или пароль!</span></p></body></html>");
-        }
-    }
-    else
-    {
-        ui->label_5->setText("<html><head/><body><p align=\"center\"><span style=\" color:#ffffff;\">"
-                             "Все поля должны быть заполнены!</span></p></body></html>");
-    }
-}
 
-void MainWindow::on_signupButton_clicked()
-{
-    if (ui->username_2->text() != "" && ui->password_2->text() != "")
-    {
-        if(game.signup(ui->username_2->text(), ui->password_2->text()))
-        {
-
-            setNameAndScore();
-            on_mainpageButton_clicked();
-        }
-        else
-        {
-            ui->label_6->setText("<html><head/><body><p align=\"center\"><span style=\" color:#ffffff;\">"
-                                 "Игрок с таким логином</span></p><p align=\"center\"><span style=\" color:#ffffff;\">"
-                                 "уже зарегистрирован!</span></p></body></html>");
-        }
-    }
-    else
-    {
-        ui->label_6->setText("<html><head/><body><p align=\"center\"><span style=\" color:#ffffff;\">"
-                             "Все поля должны быть заполнены!</span></p></body></html>");
-    }
-}
-
-
-void MainWindow::on_signupButton_2_clicked()
-{
-     ui->gameWidget->setCurrentWidget(ui->pageSignup);
-     showUserInfo();
-     hideLoginButtons();
-
-     hideSpecialButtons();
-}
-*/
 void MainWindow::on_answerButton_1_clicked()
 {
     checkAnswer(1);
@@ -478,14 +308,7 @@ void MainWindow::on_rulesButton_clicked()
             //hideScoreInfo();
             removeEventFilterOnBtns();
         }
-        /*ui->score->setText("<html><head/><body><p align=\"center\">"
-                           "<span style=\" font-size:18pt; color:#ffffff;\">" +
-                           QString::number(game.getPlayer().getSumScore()) +
-                           "</span></p></body></html>");
-        ui->gameWidget->setCurrentWidget(ui->pageHelp);
-        showUserInfo();
-        hideLoginButtons();
-*/
+
         hideSpecialButtons();
 
         howtoOut();
@@ -493,30 +316,6 @@ void MainWindow::on_rulesButton_clicked()
 
 }
 
-/*void MainWindow::statsOut()
-{
-    ui->statBrowser->clear();
-    ui->statBrowser->insertHtml("<p style=\"font-size: 26px; padding: 30px 10px 10px 10px;\"><center><b>Статистика</b></center></p>");
-    QSqlQuery query = game.getStats();
-
-    QString html;
-    html = "<center><table width=\"470\"><tr><td style=\"padding: 10px 0px 0px 10px\" width=\"120\"><b>Игрок</b></td><td style=\"padding: 10px 0px 0px 5px\"><b>Музыка</b></td>"
-           "<td style=\"padding: 10px 0px 0px 5px\"><b>Фильмы</b></td><td style=\"padding: 10px 0px 0px 5px\"><b>Всего</b></td></tr>";
-
-    while (query.next())
-        {
-        QString login = query.value(0).toString();
-        QString music_score = query.value(1).toString();
-        QString film_score = query.value(2).toString();
-        int total = music_score.toInt() + film_score.toInt();
-        html += "<tr><td style=\"padding: 5px 0px 0px 10px\">" + login + "</td><td style=\"padding: 5px 0px 0px 5px\">" +
-                music_score + "</td><td style=\"padding: 5px 0px 0px 5px\">" +
-                film_score + "</td><td style=\"padding: 5px 0px 0px 5px\">" + QString::number(total) + "</td></tr>";
-        }
-    html += "</table></center>";
-    ui->statBrowser->insertHtml(html);
-}
-*/
 void MainWindow::updatePlayScreen()
 {
     if(!game.playGame(actualGame)){
@@ -599,21 +398,7 @@ void MainWindow::backgroundMusic()
     mediaPlayer->play();
 }
 
-/*void MainWindow::setNameAndScore()
-{
-    ui->name->setText("<html><head/><body><p align=\"center\">"
-            "<span style=\" font-size:18pt; color:#6aaa49;\">" +
-            game.getPlayer().getName() +
-            "</span></p></body></html>");
 
-    ui->score->setText("<html><head/><body><p align=\"center\">"
-            "<span style=\" font-size:18pt; color:#ffffff;\">" +
-            QString::number(game.getPlayer().getSumScore()) +
-            "</span></p></body></html>");
-    ui->countRightAnswers->setText("0");
-    ui->secondsLabel->setText("0");
-}
-*/
 
 void MainWindow::updateTimer()
 {
@@ -765,10 +550,7 @@ void MainWindow::playerLose(QString message)
     }
 
     backgroundMusic();
-    //on_statButton_clicked();
     ui->tryagainButton->show();
-    //ui->statBrowser->clear();
-   // ui->statBrowser->insertHtml(message);
     tmr_end->start();
     tmr->stop();
 }
@@ -790,10 +572,8 @@ void MainWindow::playerWin()
         }
     }
     backgroundMusic();
-    //on_statButton_clicked();
+
     ui->tryagainButton->show();
-   // ui->statBrowser->clear();
-  //  ui->statBrowser->insertHtml("<table width=\"490\"><tr><td style=\"padding: 170px 10px 10px 10px;\"><center>Вы выиграли!</center></td></tr></table>");
     if (actualGame == "music")
         ui->countRightAnswers->setText(QString::number((game.getRightAnswerCount(actualGame)).toInt()+1));
     else
@@ -805,9 +585,9 @@ void MainWindow::playerWin()
 void MainWindow::gameEnd()
 {
     checkInGame = false;
-    //on_statButton_clicked();
+
     ui->tryagainButton->show();
-    //hideScoreInfo();
+
 }
 
 void MainWindow::resizeBtnUp()
@@ -882,15 +662,7 @@ void MainWindow::on_tryagainButton_clicked()
 
 }
 
-/*void MainWindow::changeCurrentScore(int value)
-{
-    game.setCurrentScore(value);
-    ui->score->setText("<html><head/><body><p align=\"center\">"
-                       "<span style=\" font-size:18pt; color:#ffffff;\">" +
-                       QString::number(game.getCurrentScore()) +
-                       "</span></p></body></html>");
-}
-*/
+
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     bool check = true;
